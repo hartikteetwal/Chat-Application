@@ -10,15 +10,15 @@ export const useAuthStore = create((set)=>({
 
     isCheckingAuth:true,
 
-    checkAuth:async()=>{
+    checkAuth: async () => {
         try {
-            const res = axiosInstance.get("/auth/check");
-            set({authUser:res})
+            const res = await axiosInstance.get("/auth/check");
+            set({ authUser: res.data });
         } catch (error) {
-            console.log("Error in checkAuth",error);
-            set({authUser:null});
-        } finally{
-            set({isCheckingAuth:false})
+            console.log("Error in checkAuth:", error);
+            set({ authUser: null });
+        } finally {
+            set({ isCheckingAuth: false });
         }
     },
 
@@ -59,17 +59,17 @@ export const useAuthStore = create((set)=>({
         }
     },
 
-    updateProfile:async(data)=>{
-        set({isUpdatingProfile:true})
-        try {
-            const res = await axiosInstance.patch("/auth/update-profile",data)
-            set({ authUser: res.data })
-            toast.success("Profile updated successfully")
-        } catch (error) {
-            console.log("Error in updateProfile", error);
-            toast.error(error.response.data.message || "Something went wrong")
-        } finally {
-            set({ isUpdatingProfile: false });
-        }
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.log("error in update profile:", error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUpdatingProfile: false });
     }
+  },
 }))
