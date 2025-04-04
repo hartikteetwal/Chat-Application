@@ -5,6 +5,11 @@ export default defineConfig({
   plugins: [
     tailwindcss(),
   ],
+  daisyui:{
+    themes:[
+      "light","dark","cupcake","retro"
+    ]
+  },
   define: {
     'process.env': {},
   },
