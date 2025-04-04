@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import Navbar from './components/Navbar';
 import { useAuthStore } from './store/useAuthStore';
 import { Loader } from 'lucide-react';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const {authUser,checkAuth,isCheckingAuth} = useAuthStore()
@@ -15,7 +16,6 @@ const App = () => {
   useEffect(()=>{
     checkAuth()
   },[checkAuth])
-  console.log(authUser)
 
   if(isCheckingAuth && !authUser) return(
     <div className=' flex items-center justify-center h-screen'>
@@ -32,6 +32,9 @@ const App = () => {
         <Route path='/setting' element={<SettingPage/>}/>
         <Route path='/profile' element={authUser?<ProfilePage/>:<Navigate to={'/login'}/>}/>
       </Routes>
+      <Toaster position="top-right"
+        reverseOrder={true} />
+
     </div>
   );
 };
